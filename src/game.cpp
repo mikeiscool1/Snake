@@ -1,7 +1,6 @@
 #include "game.hpp"
 #include <SDL2/SDL.h>
 #include "constants.hpp"
-#include "iostream"
 
 using namespace Window;
 
