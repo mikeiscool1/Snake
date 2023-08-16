@@ -22,3 +22,4 @@ enum class Direction {
 #define Colors_white 92, 92, 92, 255
 #define Colors_food 255, 0, 0, 255
 #define Colors_snake 0, 255, 0, 255
+#define Colors_snake_head 0, 200, 0, 255

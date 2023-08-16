@@ -64,28 +64,20 @@ void Game::handleEvents() {
 
         switch (event.key.keysym.sym) {
           case SDLK_UP: case SDLK_w:
-            if (!game_over && direction != Direction::DOWN) {
-              direction = Direction::UP;
-              pending_directions.push_back(Direction::UP);
-            }
+            if (!game_over && direction != Direction::DOWN)
+              direction = Direction::UP, pending_directions.push_back(Direction::UP);
             break;
           case SDLK_DOWN: case SDLK_s:
-            if (!game_over && direction != Direction::UP) {
-              direction = Direction::DOWN;
-              pending_directions.push_back(Direction::DOWN);
-            }
+            if (!game_over && direction != Direction::UP)
+              direction = Direction::DOWN, pending_directions.push_back(Direction::DOWN);
             break;
           case SDLK_RIGHT: case SDLK_d:
-            if (!game_over && direction != Direction::LEFT) {
-              direction = Direction::RIGHT;
-              pending_directions.push_back(Direction::RIGHT);
-            }
+            if (!game_over && direction != Direction::LEFT)
+              direction = Direction::RIGHT, pending_directions.push_back(Direction::RIGHT);
             break;
           case SDLK_LEFT: case SDLK_a:
-            if (!game_over && direction != Direction::RIGHT)  {
-              direction = Direction::LEFT;
-              pending_directions.push_back(Direction::LEFT);
-            }
+            if (!game_over && direction != Direction::RIGHT)
+              direction = Direction::LEFT, pending_directions.push_back(Direction::LEFT);
             break;
           case SDLK_SPACE:
             if (game_over) {
@@ -214,9 +206,14 @@ void Game::updateSnake() {
 
 void Game::renderSnake() {
   SDL_SetRenderDrawColor(renderer, Colors_snake);
-  for (const SDL_Rect& rect : snake) {
+  for (int i = 0; i < snake.size() - 1; i++) {
+    SDL_Rect& rect = snake[i];
     SDL_RenderFillRect(renderer, &rect);
   }
+
+  SDL_SetRenderDrawColor(renderer, Colors_snake_head);
+  SDL_Rect& rect = snake.back();
+  SDL_RenderFillRect(renderer, &rect);
 }
 
 void Game::updateFood() {
