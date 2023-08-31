@@ -1,1 +1,1 @@
-Originally designed on MacOS. Should work with Windows, but slight modifications may need to be made to compile. Utilizes SDL2, so this library must be downlaoded to compile.
+Originally designed on MacOS. Should work with Windows, but slight modifications may need to be made to compile. Utilizes SDL2, so this library must be downloaded to compile.
