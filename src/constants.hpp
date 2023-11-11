@@ -12,6 +12,7 @@ namespace FPS {
 }
 
 enum class Direction {
+  STILL,
   UP,
   DOWN,
   LEFT,

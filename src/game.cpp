@@ -62,33 +62,41 @@ void Game::handleEvents() {
       case SDL_KEYDOWN:
         if (pending_directions.size() > 4) break;
 
+        auto isDirectionKey = [](SDL_Keycode keycode) {
+          switch (keycode) {
+            case SDLK_UP: case SDLK_w:
+            case SDLK_RIGHT: case SDLK_d:
+            case SDLK_DOWN: case SDLK_s:
+            case SDLK_LEFT: case SDLK_a:
+              return true;
+            default: return false;
+          }
+        };
+
+        if (game_over && isDirectionKey(event.key.keysym.sym)) {
+          snake = { { (rows / 2 - 1) * tile_size, (rows / 2 - 1) * tile_size, tile_size, tile_size } };
+          direction = Direction::STILL;
+          pending_directions = {};
+          updateFood();
+          game_over = false;
+        }
+
         switch (event.key.keysym.sym) {
           case SDLK_UP: case SDLK_w:
-            if (!game_over && direction != Direction::DOWN)
+            if (direction != Direction::DOWN)
               direction = Direction::UP, pending_directions.push_back(Direction::UP);
             break;
           case SDLK_DOWN: case SDLK_s:
-            if (!game_over && direction != Direction::UP)
+            if (direction != Direction::UP)
               direction = Direction::DOWN, pending_directions.push_back(Direction::DOWN);
             break;
           case SDLK_RIGHT: case SDLK_d:
-            if (!game_over && direction != Direction::LEFT)
+            if (direction != Direction::LEFT)
               direction = Direction::RIGHT, pending_directions.push_back(Direction::RIGHT);
             break;
           case SDLK_LEFT: case SDLK_a:
-            if (!game_over && direction != Direction::RIGHT)
+            if (direction != Direction::RIGHT)
               direction = Direction::LEFT, pending_directions.push_back(Direction::LEFT);
-            break;
-          case SDLK_SPACE:
-            if (game_over) {
-              snake = { { (rows / 2 - 1) * tile_size, (rows / 2 - 1) * tile_size, tile_size, tile_size } };
-              direction = Direction::RIGHT;
-              pending_directions = {};
-              updateFood();
-
-              game_over = false;
-            }
-
             break;
         }
 
@@ -168,6 +176,7 @@ void Game::updateSnake() {
     case Direction::LEFT:
       tail.x -= tile_size;
       break;
+    case Direction::STILL: break;
   }
 
   snake.pop_front();
