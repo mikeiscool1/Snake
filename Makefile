@@ -6,7 +6,7 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
 TARGET = main
 
 CC = g++
-CFLAGS = -c -std=c++20 -Wall $(shell sdl2-config --cflags)
+CFLAGS = -c -std=c++20 -Wall -O3 $(shell sdl2-config --cflags)
 LDFLAGS = $(shell sdl2-config --libs)
 
 all: $(TARGET)
